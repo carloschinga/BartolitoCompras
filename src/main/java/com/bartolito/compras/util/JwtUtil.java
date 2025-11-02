@@ -16,7 +16,6 @@ public class JwtUtil {
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
-
     // Extraer username de token
     public String extractUsername(String token) {
         return Jwts.parserBuilder()

@@ -16,7 +16,4 @@ public class ComprasService {
         return repository.obtenerComprasSolpeManual(codtip,codlab,codgen,estr, pet);
     }
 
-
-
-
 }

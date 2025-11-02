@@ -13,7 +13,6 @@ public class GraficaProductoRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
     public List<Map<String, Object>> obtenerStockAlmacenTodos(String codpro) {
         String sql = "EXEC sp_bart_compras_grafica_producto_stkalm_todos ?";
         return jdbcTemplate.queryForList(sql, codpro);

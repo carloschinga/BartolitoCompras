@@ -20,7 +20,6 @@ public class SecurityConfig {
     public SecurityConfig(JwtComercialFilter jwtComercialFilter) {
         this.jwtComercialFilter = jwtComercialFilter;
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

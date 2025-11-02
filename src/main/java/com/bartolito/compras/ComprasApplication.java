@@ -12,7 +12,6 @@ public class ComprasApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(ComprasApplication.class);
     }
-
     public static void main(String[] args) {
         SpringApplication.run(ComprasApplication.class, args);
     }

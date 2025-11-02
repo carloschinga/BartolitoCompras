@@ -34,5 +34,4 @@ public class GraficaProductoService {
         return repository.obtenerInfoUltimasCompras(codpro);
     }
 
-
 }

@@ -57,4 +57,5 @@ public class ParametroSolpeManualDTO {
     public void setPet(String pet) {
         this.pet = pet;
     }
+    
 }

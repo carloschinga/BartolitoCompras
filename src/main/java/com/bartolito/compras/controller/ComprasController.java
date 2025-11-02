@@ -47,9 +47,6 @@ public class ComprasController {
                     .body(error.toString());
         }
     }
-
-
-
     // ✅ Endpoint de prueba
     @GetMapping("/hola")
     public ResponseEntity<String> holaMundo() {
