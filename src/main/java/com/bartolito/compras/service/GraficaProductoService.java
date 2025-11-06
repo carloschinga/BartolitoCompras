@@ -29,6 +29,9 @@ public class GraficaProductoService {
     public  List<Map<String, Object>> obtenerIndicadorCompra(String codpro) {
         return repository.obtenerIndicadorCompra(codpro);
     }
+    public  List<Map<String, Object>> obtenerIndicadorVenta(String codpro) {
+        return repository.obtenerIndicadorVenta(codpro);
+    }
 
     public  List<Map<String, Object>> obtenerInfoUltimasCompras(String codpro) {
         return repository.obtenerInfoUltimasCompras(codpro);

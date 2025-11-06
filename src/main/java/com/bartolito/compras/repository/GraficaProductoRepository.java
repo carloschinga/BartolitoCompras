@@ -22,6 +22,10 @@ public class GraficaProductoRepository {
         String sql = "EXEC sp_bart_compras_grafica_producto_indicador_compra ?";
         return jdbcTemplate.queryForList(sql, codpro);
     }
+    public List<Map<String, Object>> obtenerIndicadorVenta(String codpro) {
+        String sql = "EXEC sp_bart_compras_grafica_producto_indicador_venta ?";
+        return jdbcTemplate.queryForList(sql, codpro);
+    }
 
     public List<Map<String, Object>> obtenerVentasPorFarmacia(String codpro) {
         String sql = "EXEC sp_bart_compras_grafica_producto_ventas_farmacia ?";
