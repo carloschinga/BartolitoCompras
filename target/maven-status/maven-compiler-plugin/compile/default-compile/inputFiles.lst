@@ -9,5 +9,6 @@ C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\controller\ComprasController.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\repository\GraficaProductoRepository.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\ParametroSolpeManualDTO.java
+C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\exception\GlobalExceptionHandler.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\config\CorsConfig.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\util\JwtUtil.java

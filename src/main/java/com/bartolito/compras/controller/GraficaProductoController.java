@@ -84,6 +84,21 @@ public class GraficaProductoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+    @PostMapping("/obtener-indicador-venta")
+    public ResponseEntity<Map<String, Object>> obtenerIndicadorVenta(@RequestBody ParametroProductoDTO parametroProductoDTO) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            List<Map<String, Object>> data = service.obtenerIndicadorVenta(parametroProductoDTO.getCodpro());
+            response.put("resultado", "ok");
+            response.put("data", data);
+            return ResponseEntity.ok(response);
+
+        }catch (Exception e) {
+            response.put("resultado", "error");
+            response.put("mensaje", "Error inesperado: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
     @PostMapping("/obtener-info-ultimas-compras")
     public ResponseEntity<Map<String, Object>> obtenerInfoUltimasCompras(@RequestBody ParametroProductoDTO parametroProductoDTO) {
         Map<String, Object> response = new LinkedHashMap<>();
