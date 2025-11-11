@@ -1,0 +1,13 @@
+com\bartolito\compras\service\ComprasService.class
+com\bartolito\compras\util\JwtComercialFilter.class
+com\bartolito\compras\dto\ParametroProductoDTO.class
+com\bartolito\compras\service\GraficaProductoService.class
+com\bartolito\compras\controller\ComprasController.class
+com\bartolito\compras\ComprasApplication.class
+com\bartolito\compras\repository\GraficaProductoRepository.class
+com\bartolito\compras\util\JwtUtil.class
+com\bartolito\compras\controller\GraficaProductoController.class
+com\bartolito\compras\dto\ParametroSolpeManualDTO.class
+com\bartolito\compras\util\SecurityConfig.class
+com\bartolito\compras\repository\ComprasRepository.class
+com\bartolito\compras\config\CorsConfig.class

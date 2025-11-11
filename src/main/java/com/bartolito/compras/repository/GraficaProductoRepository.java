@@ -1,6 +1,7 @@
 package com.bartolito.compras.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,8 @@ import java.util.Map;
 @Repository
 public class GraficaProductoRepository {
 
-    @Autowired
+	@Autowired
+    @Qualifier("lolfarJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
     public List<Map<String, Object>> obtenerStockAlmacenTodos(String codpro) {
