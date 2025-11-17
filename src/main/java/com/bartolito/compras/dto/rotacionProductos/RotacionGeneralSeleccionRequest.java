@@ -1,6 +1,7 @@
 package com.bartolito.compras.dto.rotacionProductos;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,7 @@ public class RotacionGeneralSeleccionRequest implements Serializable {
 	private String categvta; 
 	private String observacion; 
 	private String prodDesc; 
+	private String enlace_web; 
+	private String fecha_ultima_compra; 
 
 }

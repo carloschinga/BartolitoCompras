@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bartolito.compras.dto.rotacionProductos.RotacionGeneralSeleccionRequest;
+import com.bartolito.compras.dto.rotacionProductos.RotacionObservacionRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionProductosRequest;
 import com.bartolito.compras.repository.AnalisisVentasRepository;
 
@@ -31,10 +31,24 @@ public class AnalisisVentasService {
 	public List<Map<String, Object>> obtenerListadoRotacionProductos() {
 		return analisisVentasRepository.obtenerListadoRotacionProductos();
 	}
-	
+
 	public List<Map<String, Object>> obtenerListadoRotacionGeneralProductosSeleccionados() {
 		return analisisVentasRepository.obtenerListadoRotacionGeneralProductosSeleccionados();
 	}
+
+	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos() {
+		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificos();
+	}
+
+	public List<Map<String, Object>> obtenerProductosByFarmacia(Integer siscod) {
+		return analisisVentasRepository.obtenerProductosByFarmacia(siscod);
+	}
+
+	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificosSeleccionados(Integer siscod) {
+		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificosSeleccionados(siscod);
+	}
+
+	/* COMBOS */
 
 	public List<Map<String, Object>> initComboCategvta() {
 		return analisisVentasRepository.initComboCategvta();
@@ -48,23 +62,66 @@ public class AnalisisVentasService {
 		return analisisVentasRepository.initComboTipos();
 	}
 
-	public List<Map<String, Object>> obtenerDatosProductosLolfarById(String codpro) {
-		return analisisVentasRepository.obtenerDatosProductosLolfarById(codpro);
+	/* DATOS ESPECIFICOS ROTACION GENERAL */
+
+	public List<Map<String, Object>> obtenerDatosProductosLolfar() {
+		return analisisVentasRepository.obtenerDatosProductosLolfar();
 	}
 
 	public List<Map<String, Object>> obtenerVentasUltimos30Dias(String codpro) {
 		return analisisVentasRepository.obtenerVentasUltimos30Dias(codpro);
 	}
-	
+
+	public List<Map<String, Object>> obtenerFarmacias() {
+		return analisisVentasRepository.obtenerFarmacias();
+	}
+
+	public List<Map<String, Object>> obtenerStockAlmacenTodos(String codpro) {
+		return analisisVentasRepository.obtenerStockAlmacenTodos(codpro);
+	}
+
+	public List<Map<String, Object>> obtenerFechaUltimaCompra(String codpro) {
+		return analisisVentasRepository.obtenerFechaUltimaCompra(codpro);
+	}
+
+	/* DATOS ESPECIFICOS ROTACION ESPECIFICA */
+
+	public List<Map<String, Object>> obtenerVentasUltimos30DiasByFarmacia(String codpro, String almacen) {
+		return analisisVentasRepository.obtenerVentasUltimos30DiasByFarmacia(codpro, almacen);
+	}
+
+	public List<Map<String, Object>> obtenerTasaByFarmacia(String codpro, String almacen) {
+		return analisisVentasRepository.obtenerTasaByFarmacia(codpro, almacen);
+	}
+
+	/* MANTENIMIENTO ROTACION GENERAL */
+
 	public void deleteRotacionProductoGeneralSeleccion(String codpro) {
 		analisisVentasRepository.deleteRotacionProductoGeneralSeleccion(codpro);
 	}
-	
-	
-	public void saveRotacionProductoGeneralSeleccion(String json) {
-		analisisVentasRepository.saveRotacionProductoGeneralSeleccion(json); 
+
+	public void updateRotacionProductoGeneral(RotacionObservacionRequest t) {
+		analisisVentasRepository.updateRotacionProductoGeneral(t);
 	}
 
+	public void saveRotacionProductoGeneralSeleccion(String json) {
+		analisisVentasRepository.saveRotacionProductoGeneralSeleccion(json);
+	}
+
+	/* MANTENIMIENTO ROTACION ESPECIFICA */
+
+	public void saveRotacionProductoEspecificosSeleccion(String json) {
+		analisisVentasRepository.saveRotacionProductoEspecificosSeleccion(json);
+	}
+	
+	public void updateRotacionProductoEspecificosSeleccion(RotacionObservacionRequest t) {
+		analisisVentasRepository.updateRotacionProductoEspecificosSeleccion(t);
+	}
+
+	public void deleteRotacionProductoEspecificosSeleccion(Integer rotaespid) {
+		analisisVentasRepository.deleteRotacionProductoEspecificosSeleccion(rotaespid);
+	}
+	
 	public void saveOrUpdate(MultipartFile file) {
 		try (InputStream is = file.getInputStream(); Workbook workbook = WorkbookFactory.create(is)) {
 			Sheet sheet = workbook.getSheetAt(0);
