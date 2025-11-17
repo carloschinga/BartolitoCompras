@@ -9,26 +9,29 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RotacionProductosResponse implements Serializable {
+public class RotacionEspecificosSeleccionadosResponse implements Serializable {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 50266809223938902L;
+	* 
+	*/
+	private static final long serialVersionUID = 6337072490960704426L;
 
+	private Integer rotaespid; 
 	private String prodId;
 	private String prodDesc;
 	private String codtip;
 	private String destip;
 	private String codgen;
 	private String desgen;
-	private String fechaUltimaCompra;
 	private Double stock;
 	private Double ventasUltimos;
 	private Double indiceRotacion;
 	private Double stockPromedioValorizado;
 	private Double ultimoStockValorizado;
+	private Double tasa; 
 	private Double coberturaMensual;
 	private String categvta;
+	private String observacion;
 	private String enlaceWeb;
+	private Integer siscod;
 
 }
