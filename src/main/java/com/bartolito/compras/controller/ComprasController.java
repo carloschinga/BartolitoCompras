@@ -7,6 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/solpe")
 public class ComprasController {
@@ -17,7 +21,7 @@ public class ComprasController {
         this.service = service;
     }
 
-    @PostMapping("/obtener-compras-solpe-manual")
+    /*@PostMapping("/obtener-compras-solpe-manual")
     public ResponseEntity<String> obtenerComprasSolpeManual(@RequestBody ParametroSolpeManualDTO parametroDTO) {
         try {
             String result = service.obtenerComprasSolpeManual(
@@ -46,7 +50,28 @@ public class ComprasController {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(error.toString());
         }
+    }*/
+
+    @GetMapping("/obtener-compras-solpe-manual")
+    public ResponseEntity<Map<String, Object>> obtenerComprasSolpeManual(@RequestParam String codtip, @RequestParam String codlab, @RequestParam String codgen, @RequestParam String estr, @RequestParam String pet) {
+
+        List<Map<String, Object>> result = service.obtenerComprasSolpeManual(codtip, codlab, codgen, estr, pet);
+
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("resultado", "ok");
+        String mensaje;
+        if (result.isEmpty()) {
+            mensaje = "no se encontraron datos";
+        } else {
+            mensaje = "datos encontrados";
+        }
+        response.put("mensaje", mensaje);
+        response.put("data", result);
+
+        return ResponseEntity.ok(response);
     }
+
+
     // ✅ Endpoint de prueba
     @GetMapping("/hola")
     public ResponseEntity<String> holaMundo() {

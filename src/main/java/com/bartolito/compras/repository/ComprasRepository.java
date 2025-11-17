@@ -15,7 +15,7 @@ public class ComprasRepository {
     @Qualifier("lolfarJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    public String obtenerComprasSolpeManual(String codtip, String codlab, String codgen, String estr, String pet) {
+    /*public String obtenerComprasSolpeManual(String codtip, String codlab, String codgen, String estr, String pet) {
         String sql = "EXEC sp_bart_compras_solpe_manual_listar ?, ?, ?, ?, ?";
 
         // Ejecuta el procedimiento y obtiene lista de filas como Map<String, Object>
@@ -24,6 +24,12 @@ public class ComprasRepository {
         // Convierte dinámicamente la lista en JSON
         org.json.JSONArray jsonArray = new org.json.JSONArray(rows);
         return jsonArray.toString();
+    }*/
+
+
+    public List<Map<String, Object>> obtenerComprasSolpeManual(String codtip, String codlab, String codgen, String estr, String pet) {
+        String sql = "EXEC sp_bart_compras_solpe_manual_listar ?, ?, ?, ?, ?";
+        return jdbcTemplate.queryForList(sql, codtip, codlab, codgen, estr, pet);
     }
 
 
