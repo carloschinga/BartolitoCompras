@@ -28,5 +28,7 @@ public class RotacionProductosSeleccionadoResponse implements Serializable {
 	private Double ultimoStockValorizado;
 	private String categvta; 
 	private String observacion; 
+	private String enlaceWeb; 
+	private String fechaUltimaCompra; 
 	
 }
