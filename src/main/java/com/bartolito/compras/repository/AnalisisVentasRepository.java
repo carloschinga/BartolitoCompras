@@ -101,17 +101,17 @@ public class AnalisisVentasRepository {
 	}
 	
 	public List<Map<String, Object>> obtenerProductosByFarmacia(Integer siscod) {
-		String sql = "EXEC sp_bart_rotacion_productos_stock_almacen_producto_farmacia_todos ?";
+		String sql = "EXEC sp_bart_rotacion_productos_stock_almacen_farmacia_todos ?";
 		return jdbcLolfarTemplate.queryForList(sql, siscod);
 	}
 	
 	public List<Map<String, Object>> obtenerVentasUltimos30DiasByFarmacia(String codpro, String almacen) {
-		String sql = "EXEC sp_bart_rotacion_especifica_producto_ventas_ultimos30dias ?,?";
+		String sql = "EXEC sp_bart_rotacion_especificos_producto_ventas_ultimos30dias ?,?";
 		return jdbcLolfarTemplate.queryForList(sql, codpro, almacen);
 	}
 	
 	public List<Map<String, Object>> obtenerTasaByFarmacia(String codpro, String almacen) {
-		String sql = "EXEC sp_bart_rotacion_especifica_tasa ?,?";
+		String sql = "EXEC sp_bart_rotacion_especificos_tasa ?,?";
 		return jdbcLolfarTemplate.queryForList(sql, codpro, almacen);
 	}
 	
