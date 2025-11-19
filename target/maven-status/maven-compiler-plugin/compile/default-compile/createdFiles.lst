@@ -1,5 +1,6 @@
 com\bartolito\compras\dto\Constantes$Catalogo.class
 com\bartolito\compras\dto\Constantes$Email.class
+com\bartolito\compras\dto\farmacia\FarmaciaResponse.class
 com\bartolito\compras\dto\Constantes$Secciones.class
 com\bartolito\compras\repository\AnalisisVentasRepository.class
 com\bartolito\compras\ComprasApplication.class
@@ -16,8 +17,10 @@ com\bartolito\compras\dto\ParametroProductoDTO.class
 com\bartolito\compras\dto\Constantes$EstadoCapacitacion.class
 com\bartolito\compras\dto\Constantes$ValoresConstantes.class
 com\bartolito\compras\dto\rotacionProductos\RotacionProductosRequest.class
+com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosSeleccionRequest.class
 com\bartolito\compras\dto\Constantes$ContentType.class
 com\bartolito\compras\dto\Constantes$Extension.class
+com\bartolito\compras\dto\rotacionProductos\RotacionObservacionRequest.class
 com\bartolito\compras\controller\GraficaProductoController.class
 com\bartolito\compras\dto\ParametroSolpeManualDTO.class
 com\bartolito\compras\dto\Constantes$PathUrl.class
@@ -28,6 +31,8 @@ com\bartolito\compras\dto\rotacionProductos\TipoRentabilidadResponse.class
 com\bartolito\compras\dto\rotacionProductos\TipoProductoResponse.class
 com\bartolito\compras\dto\rotacionProductos\ComboRotacionProductosGeneral.class
 com\bartolito\compras\dto\Constantes$TipoInspeccion.class
+com\bartolito\compras\dto\rotacionProductos\RotacionProductosEspecificosResponse.class
+com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosSeleccionadosResponse.class
 com\bartolito\compras\controller\AnalisisVentasController.class
 com\bartolito\compras\dto\Constantes$EstadoUsuario.class
 com\bartolito\compras\dto\rotacionProductos\RotacionProductosSeleccionadoResponse.class
