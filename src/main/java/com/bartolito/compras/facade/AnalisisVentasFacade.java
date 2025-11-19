@@ -33,14 +33,15 @@ public class AnalisisVentasFacade {
 	@Autowired
 	private AnalisisVentasService analisisVentasService;
 
-	public List<RotacionProductosResponse> loadRotacionProductos() {
+
+    public List<RotacionProductosResponse> loadRotacionProductos() {
 
 		List<RotacionProductosResponse> collection = new ArrayList<>();
 		List<Map<String, Object>> listDTO = analisisVentasService.obtenerListadoRotacionProductos();
 		List<Map<String, Object>> productos = analisisVentasService.obtenerDatosProductosLolfar();
 
 		Map<String, Map<String, Object>> productoMap = productos.stream()
-				.collect(Collectors.toMap(x -> (String) x.get("codpro"), x -> x));
+				.collect(Collectors.toMap(x -> (String) x.get("codpro"), x -> x, (a,b) -> a));
 
 		for (Map<String, Object> fila : listDTO) {
 
@@ -62,7 +63,6 @@ public class AnalisisVentasFacade {
 			r.setStockPromedioValorizado(stockProm != null ? ((Number) stockProm).doubleValue() : null);
 
 			List<Map<String, Object>> data = analisisVentasService.obtenerStockAlmacenTodos(r.getProdId());
-
 			List<Map<String, Object>> ventas = analisisVentasService.obtenerVentasUltimos30Dias(r.getProdId());
 			List<Map<String, Object>> ultimaCompra = analisisVentasService.obtenerFechaUltimaCompra(r.getProdId());
 
@@ -151,7 +151,14 @@ public class AnalisisVentasFacade {
 
 			String codpro = (String) filaProd.get("codpro");
 
-			String codalm = filaProd.get("codalm").toString();
+            Object codalmObj = filaProd.get("codalm");
+
+            if (codalmObj == null) {
+                System.out.println("codalm NULL → prod: " + codpro + " en siscod: " + siscod);
+                continue;
+            }
+
+            String codalm = codalmObj.toString();
 
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
@@ -237,7 +244,14 @@ public class AnalisisVentasFacade {
 
 			Map<String, Object> producto = productonMap.get(codpro);
 
-			String codalm = producto.get("codalm").toString();
+            Object codalmObj = filaProd.get("codalm");
+
+            if (codalmObj == null) {
+                System.out.println("codalm NULL → prod: " + codpro + " en siscod: " + siscod);
+                continue;
+            }
+
+            String codalm = codalmObj.toString();
 
 			if (producto == null) {
 				continue;

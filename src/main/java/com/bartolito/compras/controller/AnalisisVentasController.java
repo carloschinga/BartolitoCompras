@@ -76,17 +76,17 @@ public class AnalisisVentasController {
 	public List<RotacionProductosEspecificosResponse> loadRotacionProductosEspecifico(@PathVariable Integer siscod) {
 		return analisisVentasFacade.loadRotacionProductosEspecifico(siscod);
 	}
-
-	@PostMapping("/saveRotacionProductoEspecificosSeleccion")
-	public BaseOperacionResponse saveRotacionProductoEspecificosSeleccion(
-			@RequestBody List<RotacionEspecificosSeleccionRequest> request) {
-		return analisisVentasFacade.saveRotacionProductoEspecificosSeleccion(request);
-	}
 	
 	@GetMapping("/loadRotacionProductosEspecificosSeleccionados/{siscod}")
 	public List<RotacionEspecificosSeleccionadosResponse> loadRotacionProductosEspecificosSeleccionados(@PathVariable Integer siscod) {
 		return analisisVentasFacade.loadRotacionProductosEspecificosSeleccionados(siscod);
 	}
+
+    @PostMapping("/saveRotacionProductoEspecificosSeleccion")
+    public BaseOperacionResponse saveRotacionProductoEspecificosSeleccion(
+            @RequestBody List<RotacionEspecificosSeleccionRequest> request) {
+        return analisisVentasFacade.saveRotacionProductoEspecificosSeleccion(request);
+    }
 	
 	@DeleteMapping("/deleteRotacionProductoEspecificosSeleccion/{rotaespid}")
 	public BaseOperacionResponse deleteRotacionProductoEspecificosSeleccion(@PathVariable Integer rotaespid) {
