@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosFileRequest;
+import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosRequest;
+import com.bartolito.compras.dto.rotacionProductos.RotacionGeneralRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionObservacionRequest;
-import com.bartolito.compras.dto.rotacionProductos.RotacionProductosRequest;
 import com.bartolito.compras.repository.AnalisisVentasRepository;
 
 @Service
@@ -36,8 +38,8 @@ public class AnalisisVentasService {
 		return analisisVentasRepository.obtenerListadoRotacionGeneralProductosSeleccionados();
 	}
 
-	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos() {
-		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificos();
+	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos(Integer siscod) {
+		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificos(siscod);
 	}
 
 	public List<Map<String, Object>> obtenerProductosByFarmacia(Integer siscod) {
@@ -152,7 +154,7 @@ public class AnalisisVentasService {
 					continue;
 
 				// Crear request con los valores de las columnas
-				RotacionProductosRequest request = new RotacionProductosRequest();
+				RotacionGeneralRequest request = new RotacionGeneralRequest();
 				request.setProdId(getStringCell(row.getCell(0)));
 				request.setProdDesc(getStringCell(row.getCell(1)));
 				request.setIndiceRotacion(getDoubleCell(row.getCell(2)));
@@ -169,6 +171,56 @@ public class AnalisisVentasService {
 			throw new RuntimeException("Error al procesar el archivo Excel de rotación de productos", e);
 		}
 	}
+	
+	public void saveOrUpdateEspecificos(RotacionEspecificosFileRequest t) {
+		try (InputStream is = t.getFile().getInputStream(); Workbook workbook = WorkbookFactory.create(is)) {
+			Sheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+
+			boolean isFirstRow = true;
+			Row lastRow = sheet.getRow(sheet.getLastRowNum()); // última fila
+
+			while (rowIterator.hasNext()) {
+				Row row = rowIterator.next();
+
+				// Saltar la primera fila (encabezado)
+				if (isFirstRow) {
+					isFirstRow = false;
+					continue;
+				}
+
+				// Saltar si es la fila "total"
+				Cell firstCell = row.getCell(0);
+				if (firstCell == null || firstCell.getCellType() == CellType.BLANK)
+					continue;
+
+				String prodId = getStringCell(firstCell);
+				if (prodId.equalsIgnoreCase("total"))
+					continue;
+				String normalized = prodId.replaceAll("\\s+", " ").toLowerCase();
+				if (normalized.contains("filtros aplicados") || normalized.contains("prodest"))
+					continue;
+
+				// Crear request con los valores de las columnas
+				RotacionEspecificosRequest request = new RotacionEspecificosRequest();
+				request.setProdId(getStringCell(row.getCell(0)));
+				request.setProdDesc(getStringCell(row.getCell(1)));
+				request.setIndiceRotacion(getDoubleCell(row.getCell(2)));
+				request.setStockPromedioValorizado(getDoubleCell(row.getCell(3)));
+				request.setUltimoStockValorizado(getDoubleCell(row.getCell(4)));
+				request.setEnlaceWeb(getStringCell(row.getCell(5)));
+				request.setSiscod(t.getSiscod());
+
+				// Guardar o actualizar en BD
+
+				analisisVentasRepository.saveOrUpdateRotacionEspecificos(request);
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error al procesar el archivo Excel de rotación de productos", e);
+		}
+	}
+	
 
 	private String getStringCell(Cell cell) {
 		if (cell == null)

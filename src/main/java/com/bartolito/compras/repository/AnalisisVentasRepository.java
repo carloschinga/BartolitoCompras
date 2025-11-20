@@ -9,7 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bartolito.compras.dto.rotacionProductos.RotacionObservacionRequest;
-import com.bartolito.compras.dto.rotacionProductos.RotacionProductosRequest;
+import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosRequest;
+import com.bartolito.compras.dto.rotacionProductos.RotacionGeneralRequest;
 
 @Repository
 public class AnalisisVentasRepository {
@@ -47,10 +48,16 @@ public class AnalisisVentasRepository {
 		return jdbcLolfarTemplate.queryForList(sql);
 	}
 
-	public int saveOrUpdateRotacionProducto(RotacionProductosRequest t) {
+	public int saveOrUpdateRotacionProducto(RotacionGeneralRequest t) {
 		String sql = "EXEC sp_bart_rotacion_productos_general_saveOrUpdate ?, ?, ?, ?, ?, ?";
 		return jdbcTemplate.update(sql, t.getProdId(), t.getProdDesc(), t.getIndiceRotacion(),
 				t.getStockPromedioValorizado(), t.getUltimoStockValorizado(), t.getEnlaceWeb());
+	}
+	
+	public int saveOrUpdateRotacionEspecificos(RotacionEspecificosRequest t) {
+		String sql = "EXEC sp_bart_rotacion_productos_especificos_saveOrUpdate ?, ?, ?, ?, ?, ?, ?";
+		return jdbcTemplate.update(sql, t.getProdId(), t.getProdDesc(), t.getIndiceRotacion(),
+				t.getStockPromedioValorizado(), t.getUltimoStockValorizado(), t.getEnlaceWeb(), t.getSiscod());
 	}
 
 	public List<Map<String, Object>> obtenerDatosProductosLolfar() {
@@ -95,9 +102,9 @@ public class AnalisisVentasRepository {
 	
 	/*ROTACION ESPECIFICOS*/
 	
-	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos() {
-		String sql = "EXEC sp_bart_rotacion_productos_especificos_listar";
-		return jdbcTemplate.queryForList(sql);
+	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos(Integer siscod) {
+		String sql = "EXEC sp_bart_rotacion_productos_especificos_listar ?";
+		return jdbcTemplate.queryForList(sql, siscod);
 	}
 	
 	public List<Map<String, Object>> obtenerProductosByFarmacia(Integer siscod) {
@@ -134,6 +141,5 @@ public class AnalisisVentasRepository {
 		String sql = "EXEC sp_bart_rotacion_productos_especificos_update_seleccionado ?,?";
 		return jdbcTemplate.update(sql, t.getRotaespid(), t.getObservacion());
 	}
-	
 	
 }

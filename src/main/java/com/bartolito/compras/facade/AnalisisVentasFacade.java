@@ -2,6 +2,7 @@ package com.bartolito.compras.facade;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import com.bartolito.compras.dto.Constantes;
 import com.bartolito.compras.dto.farmacia.FarmaciaResponse;
 import com.bartolito.compras.dto.rotacionProductos.ComboRotacionProductosGeneral;
 import com.bartolito.compras.dto.rotacionProductos.GenericosResponse;
+import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosFileRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosSeleccionRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosSeleccionadosResponse;
 import com.bartolito.compras.dto.rotacionProductos.RotacionGeneralSeleccionRequest;
@@ -33,15 +35,14 @@ public class AnalisisVentasFacade {
 	@Autowired
 	private AnalisisVentasService analisisVentasService;
 
-
-    public List<RotacionProductosResponse> loadRotacionProductos() {
+	public List<RotacionProductosResponse> loadRotacionProductos() {
 
 		List<RotacionProductosResponse> collection = new ArrayList<>();
 		List<Map<String, Object>> listDTO = analisisVentasService.obtenerListadoRotacionProductos();
 		List<Map<String, Object>> productos = analisisVentasService.obtenerDatosProductosLolfar();
 
 		Map<String, Map<String, Object>> productoMap = productos.stream()
-				.collect(Collectors.toMap(x -> (String) x.get("codpro"), x -> x, (a,b) -> a));
+				.collect(Collectors.toMap(x -> (String) x.get("codpro"), x -> x, (a, b) -> a));
 
 		for (Map<String, Object> fila : listDTO) {
 
@@ -69,7 +70,6 @@ public class AnalisisVentasFacade {
 			Double totalStkAlm = 0.0;
 			Double totalStkMin2 = 0.0;
 			Double stkValIgvAlm = 0.0;
-			int contadorStkValIgv = 0;
 
 			for (Map<String, Object> xx : data) {
 
@@ -85,11 +85,10 @@ public class AnalisisVentasFacade {
 				}
 				if (stkValIgv instanceof Number) {
 					stkValIgvAlm += ((Number) stkValIgv).doubleValue();
-					contadorStkValIgv++;
 				}
 			}
 
-			Double promedioStkValIgv = contadorStkValIgv > 0 ? stkValIgvAlm / contadorStkValIgv : null;
+			r.setUltimoStockValorizado(stkValIgvAlm);
 
 			Double coberturaMensual = null;
 			if (totalStkMin2 > 0) {
@@ -129,7 +128,6 @@ public class AnalisisVentasFacade {
 
 			r.setCoberturaMensual(coberturaMensual != null ? ((Number) coberturaMensual).doubleValue() : null);
 			r.setStock(totalStkAlm != null ? ((Number) totalStkAlm).doubleValue() : null);
-			r.setUltimoStockValorizado(promedioStkValIgv);
 
 			collection.add(r);
 		}
@@ -141,7 +139,7 @@ public class AnalisisVentasFacade {
 
 		List<RotacionProductosEspecificosResponse> collection = new ArrayList<>();
 
-		List<Map<String, Object>> rotaciones = analisisVentasService.obtenerListadoRotacionProductosEspecificos();
+		List<Map<String, Object>> rotaciones = analisisVentasService.obtenerListadoRotacionProductosEspecificos(siscod);
 		List<Map<String, Object>> productos = analisisVentasService.obtenerProductosByFarmacia(siscod);
 
 		Map<String, Map<String, Object>> rotacionMap = rotaciones.stream()
@@ -151,19 +149,12 @@ public class AnalisisVentasFacade {
 
 			String codpro = (String) filaProd.get("codpro");
 
-            Object codalmObj = filaProd.get("codalm");
-
-            if (codalmObj == null) {
-                System.out.println("codalm NULL → prod: " + codpro + " en siscod: " + siscod);
-                continue;
-            }
-
-            String codalm = codalmObj.toString();
+			String codalm = (String) filaProd.get("codalm");
 
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
 			if (rotacion == null) {
-				continue;
+			 rotacion = new HashMap<>();
 			}
 
 			RotacionProductosEspecificosResponse r = new RotacionProductosEspecificosResponse();
@@ -227,7 +218,7 @@ public class AnalisisVentasFacade {
 
 		List<Map<String, Object>> rotaciones = analisisVentasService
 				.obtenerListadoRotacionProductosEspecificosSeleccionados(siscod);
-		List<Map<String, Object>> datoRotacion = analisisVentasService.obtenerListadoRotacionProductosEspecificos();
+		List<Map<String, Object>> datoRotacion = analisisVentasService.obtenerListadoRotacionProductosEspecificos(siscod);
 		List<Map<String, Object>> productos = analisisVentasService.obtenerProductosByFarmacia(siscod);
 
 		Map<String, Map<String, Object>> productonMap = productos.stream()
@@ -244,14 +235,7 @@ public class AnalisisVentasFacade {
 
 			Map<String, Object> producto = productonMap.get(codpro);
 
-            Object codalmObj = filaProd.get("codalm");
-
-            if (codalmObj == null) {
-                System.out.println("codalm NULL → prod: " + codpro + " en siscod: " + siscod);
-                continue;
-            }
-
-            String codalm = codalmObj.toString();
+			String codalm = (String) filaProd.get("codalm");
 
 			if (producto == null) {
 				continue;
@@ -313,6 +297,11 @@ public class AnalisisVentasFacade {
 
 	public BaseOperacionResponse saveOrUpdate(MultipartFile file) {
 		analisisVentasService.saveOrUpdate(file);
+		return new BaseOperacionResponse(Constantes.SUCCESS, "Archivo guardado correctamente.");
+	}
+
+	public BaseOperacionResponse saveOrUpdateEspecificos(RotacionEspecificosFileRequest t) {
+		analisisVentasService.saveOrUpdateEspecificos(t);
 		return new BaseOperacionResponse(Constantes.SUCCESS, "Archivo guardado correctamente.");
 	}
 
