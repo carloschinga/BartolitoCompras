@@ -1,7 +1,6 @@
 package com.bartolito.compras.dto.rotacionProductos;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
