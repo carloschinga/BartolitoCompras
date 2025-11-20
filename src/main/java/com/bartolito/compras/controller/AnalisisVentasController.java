@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bartolito.compras.dto.BaseOperacionResponse;
 import com.bartolito.compras.dto.farmacia.FarmaciaResponse;
 import com.bartolito.compras.dto.rotacionProductos.ComboRotacionProductosGeneral;
+import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosFileRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosSeleccionRequest;
 import com.bartolito.compras.dto.rotacionProductos.RotacionEspecificosSeleccionadosResponse;
 import com.bartolito.compras.dto.rotacionProductos.RotacionObservacionRequest;
@@ -34,11 +36,6 @@ public class AnalisisVentasController {
 	@GetMapping("/loadRotacionProductosGeneral")
 	public List<RotacionProductosResponse> loadRotacionProductosGeneral() {
 		return analisisVentasFacade.loadRotacionProductos();
-	}
-
-	@PostMapping("/saveOrUpdateFile")
-	public BaseOperacionResponse saveOrUpdateFile(@RequestBody MultipartFile file) {
-		return analisisVentasFacade.saveOrUpdate(file);
 	}
 
 	@GetMapping("/initCombosRotacionGeneral")
@@ -97,5 +94,14 @@ public class AnalisisVentasController {
 	public BaseOperacionResponse updateRotacionProductoEspecificosSeleccion(@RequestBody RotacionObservacionRequest request) {
 		return analisisVentasFacade.updateRotacionProductoEspecificosSeleccion(request);
 	}
-
+	
+	@PostMapping("/saveOrUpdateFile")
+	public BaseOperacionResponse saveOrUpdateFile(@RequestBody MultipartFile file) {
+		return analisisVentasFacade.saveOrUpdate(file);
+	}
+	
+	@PostMapping("/saveOrUpdateEspecificosFile")
+	public BaseOperacionResponse saveOrUpdateEspecificosFile(@ModelAttribute RotacionEspecificosFileRequest request) {
+		return analisisVentasFacade.saveOrUpdateEspecificos(request);
+	}
 }
