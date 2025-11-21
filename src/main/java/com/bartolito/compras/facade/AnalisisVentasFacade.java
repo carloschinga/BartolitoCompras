@@ -154,7 +154,8 @@ public class AnalisisVentasFacade {
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
 			if (rotacion == null) {
-			 rotacion = new HashMap<>();
+			 //rotacion = new HashMap<>();
+                continue;
 			}
 
 			RotacionProductosEspecificosResponse r = new RotacionProductosEspecificosResponse();
