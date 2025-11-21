@@ -154,7 +154,6 @@ public class AnalisisVentasFacade {
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
 			if (rotacion == null) {
-			 //rotacion = new HashMap<>();
                 continue;
 			}
 
@@ -236,7 +235,7 @@ public class AnalisisVentasFacade {
 
 			Map<String, Object> producto = productonMap.get(codpro);
 
-			String codalm = (String) filaProd.get("codalm");
+			String codalm = (String) producto.get("codalm");
 
 			if (producto == null) {
 				continue;
