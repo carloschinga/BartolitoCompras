@@ -2,7 +2,6 @@ package com.bartolito.compras.facade;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,6 +26,7 @@ import com.bartolito.compras.dto.rotacionProductos.RotacionProductosSeleccionado
 import com.bartolito.compras.dto.rotacionProductos.TipoProductoResponse;
 import com.bartolito.compras.dto.rotacionProductos.TipoRentabilidadResponse;
 import com.bartolito.compras.service.AnalisisVentasService;
+import com.bartolito.compras.service.GraficaProductoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -34,6 +34,9 @@ public class AnalisisVentasFacade {
 
 	@Autowired
 	private AnalisisVentasService analisisVentasService;
+	
+	@Autowired
+	private GraficaProductoService graficaProductoService; 
 
 	public List<RotacionProductosResponse> loadRotacionProductos() {
 
@@ -142,6 +145,7 @@ public class AnalisisVentasFacade {
 		List<Map<String, Object>> rotaciones = analisisVentasService.obtenerListadoRotacionProductosEspecificos(siscod);
 		List<Map<String, Object>> productos = analisisVentasService.obtenerProductosByFarmacia(siscod);
 
+
 		Map<String, Map<String, Object>> rotacionMap = rotaciones.stream()
 				.collect(Collectors.toMap(x -> (String) x.get("prodId"), x -> x));
 
@@ -154,7 +158,7 @@ public class AnalisisVentasFacade {
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
 			if (rotacion == null) {
-                continue;
+				continue; 
 			}
 
 			RotacionProductosEspecificosResponse r = new RotacionProductosEspecificosResponse();
@@ -195,15 +199,26 @@ public class AnalisisVentasFacade {
 				Object ventaObj = ventas.get(0).get("ventas");
 				r.setVentasUltimos(ventaObj != null ? ((Number) ventaObj).doubleValue() : null);
 			}
-
+			
 			// ===== TASA =====
-			List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
+			
+			/*List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
 
 			if (!tasa.isEmpty()) {
-				Object tasaObj = tasa.get(0).get("tasa");
+					Object tasaObj = tasa.get(0).get("tasa");
 				r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null);
+			}*/
+			
+			
+			// COBERTURA TOTAL
+			
+			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
+			
+			if (!coberturaTotal.isEmpty()) {
+				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
+				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
 			}
-
+			
 			collection.add(r);
 
 		}
@@ -282,12 +297,23 @@ public class AnalisisVentasFacade {
 			}
 
 			// ===== TASA =====
-			List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
+			
+			/*List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
 
 			if (!tasa.isEmpty()) {
 				Object tasaObj = tasa.get(0).get("tasa");
 				r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null);
+			}*/
+			
+			// ===== COBERTURA MENSUAL TOTAL =====
+			
+			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
+			
+			if (!coberturaTotal.isEmpty()) {
+				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
+				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
 			}
+			
 
 			collection.add(r);
 		}
