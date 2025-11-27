@@ -26,7 +26,7 @@ public class RotacionProductosEspecificosResponse implements Serializable {
 	private Double indiceRotacion;
 	private Double stockPromedioValorizado;
 	private Double ultimoStockValorizado;
-	private Double tasa; 
+	private Double coberturaMensualTotal; 
 	private Double coberturaMensual;
 	private String categvta;
 	private String enlaceWeb;
