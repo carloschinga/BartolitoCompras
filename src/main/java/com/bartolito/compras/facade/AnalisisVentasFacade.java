@@ -1,5 +1,6 @@
 package com.bartolito.compras.facade;
 
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -404,25 +405,40 @@ public class AnalisisVentasFacade {
 		return combo;
 	}
 
-	public List<FarmaciaResponse> loadFarmacias() {
+    public List<FarmaciaResponse> loadFarmacias() {
 
-		List<FarmaciaResponse> collection = new ArrayList<>();
-		List<Map<String, Object>> listDTO = analisisVentasService.obtenerFarmacias();
+        List<FarmaciaResponse> collection = new ArrayList<>();
+        List<Map<String, Object>> listDTO = analisisVentasService.obtenerFarmacias();
+        List<Map<String, Object>> fechas = analisisVentasService.obtenerFechaCargaPorFarmacia();
 
-		for (Map<String, Object> fila : listDTO) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-			FarmaciaResponse response = new FarmaciaResponse();
+        Map<Integer, String> fechaMap = fechas.stream().filter(x -> x.get("fecha_ultima_carga") != null)
+                .collect(Collectors.toMap(x -> ((Number) x.get("siscod")).intValue(), x -> {
+                    Timestamp ts = (Timestamp) x.get("fecha_ultima_carga");
+                    return ts.toLocalDateTime().format(formatter);
+                }));
 
-			Object siscod = fila.get("siscod");
-			response.setSisent((String) fila.get("sisent"));
-			response.setSiscod(siscod != null ? ((Number) siscod).intValue() : null);
+        for (Map<String, Object> fila : listDTO) {
 
-			collection.add(response);
-		}
+            FarmaciaResponse response = new FarmaciaResponse();
 
-		return collection;
+            Object siscod = fila.get("siscod");
 
-	}
+            response.setSisent((String) fila.get("sisent"));
+            response.setSiscod(siscod != null ? ((Number) siscod).intValue() : null);
+
+            Integer siscod2 = fila.get("siscod") != null ? ((Number) fila.get("siscod")).intValue() : null;
+            if (siscod2 != null && fechaMap.containsKey(siscod2)) {
+                response.setFechaUltimaCarga(fechaMap.get(siscod2));
+            }
+
+            collection.add(response);
+        }
+
+        return collection;
+
+    }
 
 	public List<RotacionProductosSeleccionadoResponse> loadRotacionProductosGeneralSeleccionados() {
 
