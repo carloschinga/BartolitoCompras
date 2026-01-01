@@ -196,7 +196,7 @@ public class AnalisisVentasFacade {
 					codalm);
 
 			if (!ventas.isEmpty()) {
-				Object ventaObj = ventas.get(0).get("ventas");
+				Object ventaObj = ventas.get(0).get("ventas2");
 				r.setVentasUltimos(ventaObj != null ? ((Number) ventaObj).doubleValue() : null);
 			}
 			
@@ -211,13 +211,13 @@ public class AnalisisVentasFacade {
 			
 			
 			// COBERTURA TOTAL
-			
-			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
-			
-			if (!coberturaTotal.isEmpty()) {
-				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
-				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
-			}
+
+            List<Map<String, Object>> coberturaTotal = analisisVentasService.obtenerCoberturaTotal(codpro);
+
+            if (!coberturaTotal.isEmpty()) {
+                Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
+                r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
+            }
 			
 			collection.add(r);
 
@@ -292,7 +292,7 @@ public class AnalisisVentasFacade {
 					codalm);
 
 			if (!ventas.isEmpty()) {
-				Object ventaObj = ventas.get(0).get("ventas");
+				Object ventaObj = ventas.get(0).get("ventas2");
 				r.setVentasUltimos(ventaObj != null ? ((Number) ventaObj).doubleValue() : null);
 			}
 
@@ -304,15 +304,15 @@ public class AnalisisVentasFacade {
 				Object tasaObj = tasa.get(0).get("tasa");
 				r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null);
 			}*/
-			
-			// ===== COBERTURA MENSUAL TOTAL =====
-			
-			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
-			
-			if (!coberturaTotal.isEmpty()) {
-				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
-				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
-			}
+
+            // COBERTURA MENSUAL TOTAL
+
+            List<Map<String, Object>> coberturaTotal = analisisVentasService.obtenerCoberturaTotal(codpro);
+
+            if (!coberturaTotal.isEmpty()) {
+                Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
+                r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
+            }
 			
 
 			collection.add(r);

@@ -116,6 +116,11 @@ public class AnalisisVentasRepository {
 		String sql = "EXEC sp_bart_rotacion_especificos_producto_ventas_ultimos30dias ?,?";
 		return jdbcLolfarTemplate.queryForList(sql, codpro, almacen);
 	}
+
+    public List<Map<String, Object>> obtenerCoberturaTotal(String codpro) {
+        String sql = "EXEC sp_bart_rotacion_productos_meses ?";
+        return jdbcLolfarTemplate.queryForList(sql, codpro);
+    }
 	
 	public List<Map<String, Object>> obtenerTasaByFarmacia(String codpro, String almacen) {
 		String sql = "EXEC sp_bart_rotacion_especificos_tasa ?,?";
