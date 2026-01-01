@@ -1,6 +1,7 @@
 com\bartolito\compras\dto\Constantes$Catalogo.class
 com\bartolito\compras\dto\Constantes$Email.class
 com\bartolito\compras\dto\farmacia\FarmaciaResponse.class
+com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosRequest.class
 com\bartolito\compras\dto\Constantes$Secciones.class
 com\bartolito\compras\repository\AnalisisVentasRepository.class
 com\bartolito\compras\ComprasApplication.class
@@ -16,7 +17,7 @@ com\bartolito\compras\util\JwtComercialFilter.class
 com\bartolito\compras\dto\ParametroProductoDTO.class
 com\bartolito\compras\dto\Constantes$EstadoCapacitacion.class
 com\bartolito\compras\dto\Constantes$ValoresConstantes.class
-com\bartolito\compras\dto\rotacionProductos\RotacionProductosRequest.class
+com\bartolito\compras\dto\rotacionProductos\RotacionGeneralRequest.class
 com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosSeleccionRequest.class
 com\bartolito\compras\dto\Constantes$ContentType.class
 com\bartolito\compras\dto\Constantes$Extension.class
@@ -35,6 +36,7 @@ com\bartolito\compras\dto\rotacionProductos\RotacionProductosEspecificosResponse
 com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosSeleccionadosResponse.class
 com\bartolito\compras\controller\AnalisisVentasController.class
 com\bartolito\compras\dto\Constantes$EstadoUsuario.class
+com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosFileRequest.class
 com\bartolito\compras\dto\rotacionProductos\RotacionProductosSeleccionadoResponse.class
 com\bartolito\compras\exception\GlobalExceptionHandler.class
 com\bartolito\compras\dto\rotacionProductos\GenericosResponse.class

@@ -1,6 +1,7 @@
+C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionGeneralRequest.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\util\JwtComercialFilter.java
+C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosRequest.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\controller\AnalisisVentasController.java
-C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionProductosRequest.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionProductosResponse.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\util\SecurityConfig.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\config\DataSourceConfig.java
@@ -19,6 +20,7 @@ C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosSeleccionRequest.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionProductosSeleccionadoResponse.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\ComprasApplication.java
+C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\RotacionEspecificosFileRequest.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\service\GraficaProductoService.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\repository\ComprasRepository.java
 C:\Users\Carlos\Documents\Bartolito\BartolitoCompras\src\main\java\com\bartolito\compras\dto\rotacionProductos\GenericosResponse.java

@@ -96,6 +96,10 @@ public class AnalisisVentasService {
 		return analisisVentasRepository.obtenerTasaByFarmacia(codpro, almacen);
 	}
 
+    public List<Map<String, Object>> obtenerCoberturaTotal(String codpro) {
+        return analisisVentasRepository.obtenerCoberturaTotal(codpro);
+    }
+
 	/* MANTENIMIENTO ROTACION GENERAL */
 
 	public void deleteRotacionProductoGeneralSeleccion(String codpro) {
