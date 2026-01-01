@@ -50,7 +50,11 @@ public class AnalisisVentasService {
 		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificosSeleccionados(siscod);
 	}
 
-	/* COMBOS */
+    public List<Map<String, Object>> obtenerFechaCargaPorFarmacia() {
+        return analisisVentasRepository.obtenerFechaCargaPorFarmacia();
+    }
+
+    /* COMBOS */
 
 	public List<Map<String, Object>> initComboCategvta() {
 		return analisisVentasRepository.initComboCategvta();
