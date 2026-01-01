@@ -1,5 +1,7 @@
 package com.bartolito.compras.facade;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +36,9 @@ public class AnalisisVentasFacade {
 
 	@Autowired
 	private AnalisisVentasService analisisVentasService;
-	
+
 	@Autowired
-	private GraficaProductoService graficaProductoService; 
+	private GraficaProductoService graficaProductoService;
 
 	public List<RotacionProductosResponse> loadRotacionProductos() {
 
@@ -145,7 +147,6 @@ public class AnalisisVentasFacade {
 		List<Map<String, Object>> rotaciones = analisisVentasService.obtenerListadoRotacionProductosEspecificos(siscod);
 		List<Map<String, Object>> productos = analisisVentasService.obtenerProductosByFarmacia(siscod);
 
-
 		Map<String, Map<String, Object>> rotacionMap = rotaciones.stream()
 				.collect(Collectors.toMap(x -> (String) x.get("prodId"), x -> x));
 
@@ -158,7 +159,7 @@ public class AnalisisVentasFacade {
 			Map<String, Object> rotacion = rotacionMap.get(codpro);
 
 			if (rotacion == null) {
-				continue; 
+				continue;
 			}
 
 			RotacionProductosEspecificosResponse r = new RotacionProductosEspecificosResponse();
@@ -199,26 +200,27 @@ public class AnalisisVentasFacade {
 				Object ventaObj = ventas.get(0).get("ventas");
 				r.setVentasUltimos(ventaObj != null ? ((Number) ventaObj).doubleValue() : null);
 			}
-			
-			// ===== TASA =====
-			
-			/*List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
 
-			if (!tasa.isEmpty()) {
-					Object tasaObj = tasa.get(0).get("tasa");
-				r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null);
-			}*/
-			
-			
+			// ===== TASA =====
+
+			/*
+			 * List<Map<String, Object>> tasa =
+			 * analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
+			 * 
+			 * if (!tasa.isEmpty()) { Object tasaObj = tasa.get(0).get("tasa");
+			 * r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null); }
+			 */
+
 			// COBERTURA TOTAL
-			
+
 			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
-			
+
 			if (!coberturaTotal.isEmpty()) {
 				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
-				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
+				r.setCoberturaMensualTotal(
+						coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
 			}
-			
+
 			collection.add(r);
 
 		}
@@ -233,7 +235,8 @@ public class AnalisisVentasFacade {
 
 		List<Map<String, Object>> rotaciones = analisisVentasService
 				.obtenerListadoRotacionProductosEspecificosSeleccionados(siscod);
-		List<Map<String, Object>> datoRotacion = analisisVentasService.obtenerListadoRotacionProductosEspecificos(siscod);
+		List<Map<String, Object>> datoRotacion = analisisVentasService
+				.obtenerListadoRotacionProductosEspecificos(siscod);
 		List<Map<String, Object>> productos = analisisVentasService.obtenerProductosByFarmacia(siscod);
 
 		Map<String, Map<String, Object>> productonMap = productos.stream()
@@ -297,23 +300,24 @@ public class AnalisisVentasFacade {
 			}
 
 			// ===== TASA =====
-			
-			/*List<Map<String, Object>> tasa = analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
 
-			if (!tasa.isEmpty()) {
-				Object tasaObj = tasa.get(0).get("tasa");
-				r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null);
-			}*/
-			
+			/*
+			 * List<Map<String, Object>> tasa =
+			 * analisisVentasService.obtenerTasaByFarmacia(codpro, codalm);
+			 * 
+			 * if (!tasa.isEmpty()) { Object tasaObj = tasa.get(0).get("tasa");
+			 * r.setTasa(tasaObj != null ? ((Number) tasaObj).doubleValue() : null); }
+			 */
+
 			// ===== COBERTURA MENSUAL TOTAL =====
-			
+
 			List<Map<String, Object>> coberturaTotal = graficaProductoService.obtenerIndicadorVenta(codpro);
-			
+
 			if (!coberturaTotal.isEmpty()) {
 				Object coberturaTotalObj = coberturaTotal.get(0).get("meses");
-				r.setCoberturaMensualTotal(coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
+				r.setCoberturaMensualTotal(
+						coberturaTotalObj != null ? ((Number) coberturaTotalObj).doubleValue() : null);
 			}
-			
 
 			collection.add(r);
 		}
@@ -408,14 +412,29 @@ public class AnalisisVentasFacade {
 
 		List<FarmaciaResponse> collection = new ArrayList<>();
 		List<Map<String, Object>> listDTO = analisisVentasService.obtenerFarmacias();
+		List<Map<String, Object>> fechas = analisisVentasService.obtenerFechaCargaPorFarmacia();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		Map<Integer, String> fechaMap = fechas.stream().filter(x -> x.get("fecha_ultima_carga") != null)
+				.collect(Collectors.toMap(x -> ((Number) x.get("siscod")).intValue(), x -> {
+					Timestamp ts = (Timestamp) x.get("fecha_ultima_carga");
+					return ts.toLocalDateTime().format(formatter);
+				}));
 
 		for (Map<String, Object> fila : listDTO) {
 
 			FarmaciaResponse response = new FarmaciaResponse();
 
 			Object siscod = fila.get("siscod");
+
 			response.setSisent((String) fila.get("sisent"));
 			response.setSiscod(siscod != null ? ((Number) siscod).intValue() : null);
+
+			Integer siscod2 = fila.get("siscod") != null ? ((Number) fila.get("siscod")).intValue() : null;
+			if (siscod2 != null && fechaMap.containsKey(siscod2)) {
+				response.setFechaUltimaCarga(fechaMap.get(siscod2));
+			}
 
 			collection.add(response);
 		}

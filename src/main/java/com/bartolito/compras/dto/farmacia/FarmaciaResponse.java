@@ -17,5 +17,6 @@ public class FarmaciaResponse implements Serializable {
 
 	private Integer siscod;
 	private String sisent;
+	private String fechaUltimaCarga; 
 
 }

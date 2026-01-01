@@ -102,6 +102,11 @@ public class AnalisisVentasRepository {
 	
 	/*ROTACION ESPECIFICOS*/
 	
+	public List<Map<String, Object>> obtenerFechaCargaPorFarmacia() {
+		String sql = "EXEC sp_bart_rotacion_productos_especificos_fecha_ultima_carga";
+		return jdbcTemplate.queryForList(sql);
+	}
+	
 	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificos(Integer siscod) {
 		String sql = "EXEC sp_bart_rotacion_productos_especificos_listar ?";
 		return jdbcTemplate.queryForList(sql, siscod);

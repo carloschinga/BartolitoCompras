@@ -49,6 +49,10 @@ public class AnalisisVentasService {
 	public List<Map<String, Object>> obtenerListadoRotacionProductosEspecificosSeleccionados(Integer siscod) {
 		return analisisVentasRepository.obtenerListadoRotacionProductosEspecificosSeleccionados(siscod);
 	}
+	
+	public List<Map<String, Object>> obtenerFechaCargaPorFarmacia() {
+		return analisisVentasRepository.obtenerFechaCargaPorFarmacia();
+	}
 
 	/* COMBOS */
 
