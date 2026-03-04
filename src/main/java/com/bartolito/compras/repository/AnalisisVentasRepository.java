@@ -99,6 +99,11 @@ public class AnalisisVentasRepository {
 		String sql = "EXEC sp_bart_rotacion_productos_fecha_ultima_compra ?";
 		return jdbcLolfarTemplate.queryForList(sql, codpro);
 	}
+
+    public int deleteRotacionProductoGeneralSeleccionMasivo(String jsonCodpro) {
+        String sql = "EXEC sp_bart_rotacion_productos_general_seleccion_eliminar_todos ?";
+        return jdbcTemplate.update(sql, jsonCodpro);
+    }
 	
 	/*ROTACION ESPECIFICOS*/
 	
@@ -151,5 +156,10 @@ public class AnalisisVentasRepository {
 		String sql = "EXEC sp_bart_rotacion_productos_especificos_update_seleccionado ?,?";
 		return jdbcTemplate.update(sql, t.getRotaespid(), t.getObservacion());
 	}
+
+    public int deleteRotacionProductoEspecificoSeleccionMasivo(String jsonIds) {
+        String sql = "EXEC sp_bart_rotacion_productos_especificos_seleccion_eliminar_todos ?";
+        return jdbcTemplate.update(sql, jsonIds);
+    }
 	
 }

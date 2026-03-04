@@ -350,6 +350,16 @@ public class AnalisisVentasFacade {
 		return new BaseOperacionResponse(Constantes.SUCCESS, "Producto eliminado correctamente.");
 	}
 
+    public BaseOperacionResponse deleteRotacionProductoGeneralMasivo(List<String> codigos) {
+        analisisVentasService.deleteRotacionProductoGeneralSeleccionMasivo(codigos);
+        return new BaseOperacionResponse(Constantes.SUCCESS, "Productos eliminados correctamente.");
+    }
+
+    public BaseOperacionResponse deleteRotacionProductoEspecificoMasivo(List<Integer> ids) {
+        analisisVentasService.deleteRotacionProductoEspecificoSeleccionMasivo(ids);
+        return new BaseOperacionResponse(Constantes.SUCCESS, "Registros eliminados correctamente.");
+    }
+
 	public BaseOperacionResponse updateRotacionProductoGeneral(RotacionObservacionRequest t) {
 		analisisVentasService.updateRotacionProductoGeneral(t);
 		return new BaseOperacionResponse(Constantes.SUCCESS, "Producto actualizado correctamente.");

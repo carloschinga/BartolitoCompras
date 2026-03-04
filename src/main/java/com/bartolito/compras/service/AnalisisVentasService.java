@@ -4,7 +4,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -118,11 +120,24 @@ public class AnalisisVentasService {
 		analisisVentasRepository.saveRotacionProductoGeneralSeleccion(json);
 	}
 
+    public void deleteRotacionProductoGeneralSeleccionMasivo(List<String> codigos) {
+        String json = new ObjectMapper().valueToTree(codigos).toString();
+        analisisVentasRepository.deleteRotacionProductoGeneralSeleccionMasivo(json);
+    }
+
 	/* MANTENIMIENTO ROTACION ESPECIFICA */
 
 	public void saveRotacionProductoEspecificosSeleccion(String json) {
 		analisisVentasRepository.saveRotacionProductoEspecificosSeleccion(json);
 	}
+
+    public void deleteRotacionProductoEspecificoSeleccionMasivo(List<Integer> ids) {
+        String lista = ids.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+        analisisVentasRepository
+                .deleteRotacionProductoEspecificoSeleccionMasivo(lista);
+    }
 	
 	public void updateRotacionProductoEspecificosSeleccion(RotacionObservacionRequest t) {
 		analisisVentasRepository.updateRotacionProductoEspecificosSeleccion(t);

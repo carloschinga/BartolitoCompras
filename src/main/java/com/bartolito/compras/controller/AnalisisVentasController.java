@@ -104,4 +104,17 @@ public class AnalisisVentasController {
 	public BaseOperacionResponse saveOrUpdateEspecificosFile(@ModelAttribute RotacionEspecificosFileRequest request) {
 		return analisisVentasFacade.saveOrUpdateEspecificos(request);
 	}
+
+    @DeleteMapping("/deleteRotacionProductoEspecificosSeleccion")
+    public BaseOperacionResponse deleteRotacionProductoEspecificosSeleccion(
+            @RequestBody List<Integer> ids) {
+        return analisisVentasFacade.deleteRotacionProductoEspecificoMasivo(ids);
+    }
+
+    @DeleteMapping("/deleteRotacionProductoGeneralSeleccion")
+    public BaseOperacionResponse deleteRotacionProductoGeneralSeleccion(
+            @RequestBody List<String> codigos) {
+        return analisisVentasFacade.deleteRotacionProductoGeneralMasivo(codigos);
+    }
+
 }
