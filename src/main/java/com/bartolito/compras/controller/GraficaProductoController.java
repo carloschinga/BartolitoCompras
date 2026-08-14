@@ -2,6 +2,7 @@ package com.bartolito.compras.controller;
 
 import com.bartolito.compras.dto.ParametroProductoDTO;
 import com.bartolito.compras.service.GraficaProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/grafica-producto")
 public class GraficaProductoController {
-    private final GraficaProductoService service;
 
-    public GraficaProductoController(GraficaProductoService service) {
-        this.service = service;
-    }
+    @Autowired
+    private GraficaProductoService service;
 
     @PostMapping("/obtener-ventas-farmacia")
     public ResponseEntity<Map<String, Object>> obtenerVentasPorFarmacia(@RequestBody ParametroProductoDTO parametroProductoDTO) {
@@ -115,4 +114,57 @@ public class GraficaProductoController {
         }
     }
 
+    // =========================================
+    // GRAFICA PRODUCTO - VENTAS
+    // =========================================
+    @PostMapping("/grafica-producto-ventas")
+    public ResponseEntity<?> graficaProductoVentas(
+            @RequestBody Map<String, Object> request
+    ) {
+
+        String codpro = request.get("codpro") != null
+                ? request.get("codpro").toString()
+                : null;
+
+        List<Map<String, Object>> result =
+                service.graficaProductoVentas(codpro);
+
+        return ResponseEntity.ok(result);
+    }
+
+    // =========================================
+    // GRAFICA PRODUCTO - PREDICCION VENTAS
+    // =========================================
+    @PostMapping("/grafica-producto-prediccion-ventas")
+    public ResponseEntity<?> graficaProductoPrediccionVentas(
+            @RequestBody Map<String, Object> request
+    ) {
+
+        String codpro = request.get("codpro") != null
+                ? request.get("codpro").toString()
+                : null;
+
+        List<Map<String, Object>> result =
+                service.graficaProductoPrediccionVentas(codpro);
+
+        return ResponseEntity.ok(result);
+    }
+
+    // =========================================
+    // GRAFICA PRODUCTO - PRECIOS
+    // =========================================
+    @PostMapping("/grafica-precios-productos")
+    public ResponseEntity<?> graficaPreciosProductos(
+            @RequestBody Map<String, Object> request
+    ) {
+
+        String codpro = request.get("codpro") != null
+                ? request.get("codpro").toString()
+                : null;
+
+        List<Map<String, Object>> result =
+                service.graficaPreciosProductos(codpro);
+
+        return ResponseEntity.ok(result);
+    }
 }

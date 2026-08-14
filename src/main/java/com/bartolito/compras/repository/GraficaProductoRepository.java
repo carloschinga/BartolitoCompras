@@ -43,4 +43,49 @@ public class GraficaProductoRepository {
         String sql = "EXEC sp_bart_compras_grafica_producto_infoultimascompras ?";
         return jdbcTemplate.queryForList(sql, codpro);
     }
+
+    // =========================================
+    // GRAFICA PRODUCTO - VENTAS
+    // =========================================
+    public List<Map<String, Object>> graficaProductoVentas(
+            String codpro
+    ) {
+
+        String sql = "EXEC sp_bart_compras_grafica_producto_ventas ?";
+
+        return jdbcTemplate.queryForList(
+                sql,
+                codpro
+        );
+    }
+
+    // =========================================
+    // GRAFICA PRODUCTO - PREDICCION VENTAS
+    // =========================================
+    public List<Map<String, Object>> graficaProductoPrediccionVentas(
+            String codpro
+    ) {
+
+        String sql = "EXEC sp_bart_compras_grafica_producto_prediccion_ventas ?";
+
+        return jdbcTemplate.queryForList(
+                sql,
+                codpro
+        );
+    }
+
+    // =========================================
+    // GRAFICA PRODUCTO - PRECIOS
+    // =========================================
+    public List<Map<String, Object>> graficaPreciosProductos(
+            String codpro
+    ) {
+
+        String sql = "EXEC sp_bart_compras_grafica_precios_productos ?";
+
+        return jdbcTemplate.queryForList(
+                sql,
+                codpro
+        );
+    }
 }

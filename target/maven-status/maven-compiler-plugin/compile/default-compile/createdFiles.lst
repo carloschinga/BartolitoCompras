@@ -24,6 +24,7 @@ com\bartolito\compras\dto\Constantes$Extension.class
 com\bartolito\compras\dto\rotacionProductos\RotacionObservacionRequest.class
 com\bartolito\compras\controller\GraficaProductoController.class
 com\bartolito\compras\dto\ParametroSolpeManualDTO.class
+com\bartolito\compras\repository\PrediccionRepository.class
 com\bartolito\compras\dto\Constantes$PathUrl.class
 com\bartolito\compras\util\SecurityConfig.class
 com\bartolito\compras\dto\Constantes$TipoCapacitacion.class
@@ -42,10 +43,12 @@ com\bartolito\compras\exception\GlobalExceptionHandler.class
 com\bartolito\compras\dto\rotacionProductos\GenericosResponse.class
 com\bartolito\compras\dto\rotacionProductos\RotacionGeneralSeleccionRequest.class
 com\bartolito\compras\dto\BaseOperacionResponse.class
+com\bartolito\compras\service\PrediccionService.class
 com\bartolito\compras\dto\Constantes$Habilitado.class
 com\bartolito\compras\dto\rotacionProductos\RotacionProductosResponse.class
 com\bartolito\compras\config\DataSourceConfig.class
 com\bartolito\compras\config\CorsConfig.class
+com\bartolito\compras\controller\PrediccionController.class
 com\bartolito\compras\dto\Constantes$Rol.class
 com\bartolito\compras\dto\Constantes$ConfiguracionSistema.class
 com\bartolito\compras\service\GraficaProductoService.class
